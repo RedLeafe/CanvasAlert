@@ -114,7 +114,7 @@ def discord_oauth():
 
 @app.route('/api', methods=['POST'])
 def receive_form():
-   discord_id = session.get("user").id
+   discord_id = session.get("user", {}).get("id")
    canvas_id = request.form.get('canvas_id')
    assignments = request.form.get('assignments_toggle')
    assignments_time = request.form.get('assignment_time')
