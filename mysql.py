@@ -24,7 +24,7 @@ def getRow(discord_id):
     result = cursor.fetchone()
     return result
 
-def getOne(column, discord_id)
+def getOne(column, discord_id):
     query = f"SELECT {column} FROM canvas WHERE discord_id = ?"
     cursor.execute(query, (discord_id,))
     result = cursor.fetchone()
