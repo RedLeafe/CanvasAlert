@@ -1,0 +1,113 @@
+/* Basic styling for the page */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in element's total width/height */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Container for the toggle items */
+.toggle-container {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack toggle items vertically */
+    gap: 20px; /* Space between toggle items */
+    width: 300px; /* Set a fixed width for the container */
+    box-sizing: border-box;
+}
+
+/* Styles for each row (label + toggle switch) */
+.toggle-item {
+    display: flex;
+    align-items: center; /* Vertically align text and switch */
+    justify-content: space-between; /* Push text and switch apart */
+    width: 100%;
+}
+
+.label-text {
+    color: #555;
+    font-size: 1em;
+    margin-right: 15px; /* Space between text and switch */
+}
+
+/* The switch - the box around the slider */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px; /* Width of the slider track */
+    height: 34px; /* Height of the slider track */
+    flex-shrink: 0; /* Prevent the switch from shrinking */
+}
+
+/* Hide default HTML checkbox */
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider track */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #dc3545; /* Default OFF color (Red) */
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+/* The sliding knob */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px; /* Height of the knob */
+    width: 26px; /* Width of the knob */
+    left: 4px; /* Initial position (left side) */
+    bottom: 4px; /* Position from bottom */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+/* Styles when the checkbox is CHECKED */
+input:checked + .slider {
+    background-color: #28a745; /* ON color (Green) */
+}
+
+/* Optional: Add a visual cue on focus, useful for keyboard navigation */
+input:focus + .slider {
+    box-shadow: 0 0 2px #28a745;
+}
+
+/* Move the knob to the right when CHECKED */
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px); /* Move knob 26px to the right */
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders styling */
+.slider.round {
+    border-radius: 34px; /* Make the track rounded */
+}
+
+.slider.round:before {
+    border-radius: 50%; /* Make the knob a circle */
+}
+
