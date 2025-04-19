@@ -188,34 +188,28 @@
             <div class="toggle-container">
                 <div class="form-group">
                     <label for="canvas_id">Canvas ID</label>
-                    <input type="text" id="canvas_id" name="canvas_id">
+                    <input type="text" id="canvas_id" name="canvas_id" value="{{ row[1] }}">
                 </div>
                 <div class="form-group">
                     <label for="assignment_time">Assignment Notification Time (Hours Before)</label>
-                    <input type="number" id="assignment_time" name="assignment_time" placeholder="e.g., 24" min="1">
+                    <input type="number" id="assignment_time" name="assignment_time" placeholder="e.g., 24" min="1" value="{{ row[3] }}">
                 </div>
                 <hr>
                 <div class="toggle-item">
                     <span class="label-text">Assignments</span>
                     <label class="toggle-switch">
-                        <input type="checkbox" name="assignments_toggle" value="on" checked>
+                        <input type="checkbox" name="assignments_toggle" value="on" {% if row[2] %}checked{% endif %}>
                         <span class="slider round"></span>
                     </label>
                 </div>
                 <div class="toggle-item">
                     <span class="label-text">Announcements</span>
                     <label class="toggle-switch">
-                        <input type="checkbox" name="announcements_toggle" value="on">
+                        <input type="checkbox" name="announcements_toggle" value="on" {% if row[5] %}checked{% endif %}>
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <div class="toggle-item">
-                    <span class="label-text">Discussions</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" name="discussions_toggle" value="on" checked>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+                
             </div>
         </div>
         <div class="submit-container" style="text-align: center; margin-top: 20px; margin-bottom: 40px;">

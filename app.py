@@ -32,10 +32,12 @@ if HAS_DB:
 @app.route('/')
 def hello_world():
    user = session.get("user")
+   row = db.getRow(user.get('id')) if user else None
+   
    if not user:
        # Redirect to Discord OAuth if not logged in
       return redirect(make_OAuth2_url("{}")) 
-   return render_template('index.html', user=user)
+   return render_template('index.html', row=row)
 
 
 def make_redirect(target: str):

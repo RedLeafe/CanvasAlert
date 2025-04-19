@@ -36,6 +36,20 @@ def is_valid_assignment(assignment, user):
         return (due_date > now) and (not submission or not submission.submitted_at)
     return False
 
+def get_announcements(canvas_url, canvas_token):
+    canvas = get_canvas_api(canvas_url, canvas_token)
+    user = canvas.get_current_user()
+    courses = user.get_courses(enrollment_state="active")
+    announcements = []
+
+    for course in courses:
+        course_announcements = canvas.get_announcements([course])
+        for ann in course_announcements:
+            announcements.append([course.name, ann.title, ann.posted_at])
+    
+    return announcements
+
+
 def get_discission_posts(canvas_url, canvas_token):
     canvas = get_canvas_api(canvas_url, canvas_token)
     user = canvas.get_user(canvas_token)
