@@ -7,7 +7,7 @@ A hackathon project that lets you log in with Discord, connect your Canvas accou
 ## Demo
 
 Watch our demo here:
-[Watch the demo video](./CanvasAlertDemo.mp4)
+https://youtu.be/txSo2fIfRH0
 
 
 ---
