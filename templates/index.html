@@ -3,36 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings Form</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>CanvasAlert</title>
     <style>
-        /* Basic styling for added form groups - consider moving to style.css */
-        .form-group {
-            margin-bottom: 15px;
+        /* === Google Font Imports (Uncomment the one you want to use) === */
+        /* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap'); */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap'); /* Currently Active Google Font */
+        /* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); */
+        /* === End Font Imports === */
+
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --container-bg: #fff;
+            --container-shadow: rgba(0, 0, 0, 0.1);
+            --input-bg: #fff;
+            --input-border: #ccc;
+            --input-text: #333;
+            --label-color: #333;
+            --secondary-text: #555;
+            --button-bg: #007bff; /* Default Blue */
+            --button-text: white; /* Default White Text */
+            --button-hover-bg: #0056b3; /* Default Darker Blue Hover */
+            --hr-color: #eee;
+            --toggle-off-bg: #dc3545;
+            --toggle-on-bg: #28a745;
+            --toggle-knob: white;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: bold;
+
+        body.dark-mode {
+            /* Dark Mode Variables */
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --container-bg: #1e1e1e;
+            --container-shadow: rgba(0, 0, 0, 0.5);
+            --input-bg: #333;
+            --input-border: #555;
+            --input-text: #e0e0e0;
+            --label-color: #bbb;
+            --secondary-text: #aaa;
+            /* Button variables remain the same as :root for the blue button */
+            /* --button-bg: #3a3a3a; */ /* No longer overriding button bg */
+            /* --button-text: #e0e0e0; */ /* No longer overriding button text */
+            /* --button-hover-bg: #555; */ /* No longer overriding button hover */
+            --hr-color: #444;
+            --toggle-off-bg: #a33333; /* Darker red */
+            --toggle-on-bg: #3a8a4a; /* Darker green */
+            --toggle-knob: #ccc;
         }
-        .form-group input[type="text"] {
-            width: calc(100% - 18px); /* Adjust width to account for padding */
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box; /* Include padding in width calculation */
-        }
-        /* Center the container holding the toggles */
-         .toggle-container-wrapper {
+
+        body {
+            font-family: Lato, sans-serif; /* Currently Active */
+            margin: 0;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 0 20px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* === Styles for Heading with Logo === */
+        .heading-container {
+            display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 20px; /* Add some padding */
+            margin-top: 60px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        .heading-container img {
+            height: 35px;
+            width: auto;
+            margin-right: 10px;
+        }
+        .heading-container h1 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 2em;
+        }
+        /* === End Heading Styles === */
+
+        /* === Dark Mode Toggle Styles === */
+        .dark-mode-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+            cursor: pointer;
+        }
+        .dark-mode-switch input { opacity: 0; width: 0; height: 0; }
+        .dark-mode-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
+        .dark-mode-slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f39c12"><path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1zm0 14a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm7.07-12.07a1 1 0 0 1 0 1.41l-1.41 1.41a1 1 0 1 1-1.41-1.41l1.41-1.41a1 1 0 0 1 1.41 0zm-12.72 0a1 1 0 0 1 1.41 0l1.41 1.41a1 1 0 1 1-1.41 1.41L4.93 6.34a1 1 0 0 1 0-1.41zm12.72 12.72a1 1 0 0 1 0-1.41l-1.41-1.41a1 1 0 1 1-1.41 1.41l1.41 1.41a1 1 0 0 1 1.41 0zm-12.72 0a1 1 0 0 1 1.41 0l1.41-1.41a1 1 0 1 1-1.41 1.41l-1.41 1.41a1 1 0 0 1 0 1.41zM4 12a1 1 0 0 1-1-1H1a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1zm14 0a1 1 0 0 1-1-1V9a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1zm-7-5a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/></svg>');
+            background-size: 14px 14px; background-repeat: no-repeat; background-position: center;
+        }
+        input:checked + .dark-mode-slider { background-color: #555; }
+        input:checked + .dark-mode-slider:before {
+            transform: translateX(24px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f1c40f"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zM10 7a1 1 0 0 0-1 1 5 5 0 0 0 9.9 1H19a1 1 0 0 0 0-2z"/></svg>');
+        }
+        .dark-mode-slider.round { border-radius: 26px; }
+        .dark-mode-slider.round:before { border-radius: 50%; }
+        /* === End Dark Mode Toggle Styles === */
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--label-color); font-weight: bold; }
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: calc(100% - 18px); padding: 8px; border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 4px; box-sizing: border-box;
+        }
+         .toggle-container-wrapper { display: flex; justify-content: center; width: 100%; }
+         .toggle-container {
+            background-color: var(--container-bg); padding: 25px 30px; border-radius: 8px; box-shadow: 0 4px 10px var(--container-shadow); max-width: 400px; width: 100%; box-sizing: border-box; transition: background-color 0.3s ease;
          }
-         /* Style the button */
+         hr { border: none; height: 1px; background-color: var(--hr-color); margin: 20px 0; }
+         .toggle-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+         .toggle-item:last-child { margin-bottom: 0; }
+         .label-text { color: var(--secondary-text); font-size: 1em; margin-right: 15px; }
+        .toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; flex-shrink: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--toggle-off-bg); transition: .4s; }
+        .toggle-switch .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: var(--toggle-knob); transition: .4s; }
+        .toggle-switch input:checked + .slider { background-color: var(--toggle-on-bg); }
+        .toggle-switch input:focus + .slider { box-shadow: 0 0 1px var(--toggle-on-bg); }
+        .toggle-switch input:checked + .slider:before { transform: translateX(26px); }
+        .toggle-switch .slider.round { border-radius: 34px; }
+        .toggle-switch .slider.round:before { border-radius: 50%; }
+
+         /* Default button styles */
          .submit-container button {
-            background-color: #007bff; /* Example primary color */
-            color: white;
+            background-color: var(--button-bg); /* Uses #007bff from :root */
+            color: var(--button-text); /* Uses white from :root */
             border: none;
             padding: 12px 25px;
             border-radius: 5px;
@@ -41,35 +151,57 @@
             transition: background-color 0.3s ease;
          }
          .submit-container button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
+            background-color: var(--button-hover-bg); /* Uses #0056b3 from :root */
          }
+
+         /* === MODIFIED: Dark mode button styles === */
+         /* We remove specific background/color overrides for the button in dark mode */
+         /* It will now inherit the default blue style defined above */
+         body.dark-mode .submit-container button {
+             /* background-color: var(--button-bg); */ /* REMOVED */
+             /* color: var(--button-text); */ /* REMOVED */
+             border: none; /* Keep border override if needed, or remove */
+             /* Ensure other properties like padding, font-size etc. are consistent or inherited */
+         }
+         body.dark-mode .submit-container button:hover {
+             /* background-color: var(--button-hover-bg); */ /* REMOVED */
+             /* Allow hover to inherit default dark blue */
+         }
+         /* === End MODIFIED dark mode button styles === */
 
     </style>
 </head>
 <body>
 
-    <h1>CanvasAlert</h1>
+    <label class="dark-mode-switch" for="dark-mode-toggle" title="Toggle Dark Mode">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="dark-mode-slider round"></span>
+    </label>
+
+    <div class="heading-container">
+        <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning Logo">
+        <h1>CanvasAlert</h1>
+    </div>
 
     <form method="POST" action="http://127.0.0.1:5000/api">
-
         <div class="toggle-container-wrapper">
-            <div class="toggle-container" style="max-width: 400px; width: 100%;"> <div class="form-group">
+            <div class="toggle-container">
+                <div class="form-group">
                     <label for="canvas_id">Canvas ID</label>
                     <input type="text" id="canvas_id" name="canvas_id">
                 </div>
-
                 <div class="form-group">
-                    <label for="assignment_time">Assignment Notification Time</label>
-                    <input type="number" id="assignment_time" name="assignment_time" placeholder="ex: 24" min="1">
+                    <label for="assignment_time">Assignment Notification Time (Hours Before)</label>
+                    <input type="number" id="assignment_time" name="assignment_time" placeholder="e.g., 24" min="1">
                 </div>
-                <hr style="margin: 20px 0;"> <div class="toggle-item">
+                <hr>
+                <div class="toggle-item">
                     <span class="label-text">Assignments</span>
                     <label class="toggle-switch">
                         <input type="checkbox" name="assignments_toggle" value="on" checked>
                         <span class="slider round"></span>
                     </label>
                 </div>
-
                 <div class="toggle-item">
                     <span class="label-text">Announcements</span>
                     <label class="toggle-switch">
@@ -77,7 +209,6 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
-
                 <div class="toggle-item">
                     <span class="label-text">Discussions</span>
                     <label class="toggle-switch">
@@ -85,9 +216,41 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
-                 </div> </div> <div class="submit-container" style="text-align: center; margin-top: 5px; margin-bottom: 20px;"> <button type="submit">Save Settings</button>
+            </div>
         </div>
+        <div class="submit-container" style="text-align: center; margin-top: 20px; margin-bottom: 40px;">
+             <button type="submit">Save Settings</button>
+        </div>
+    </form>
 
-    </form> </body>
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+
+        // Function to apply the theme
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                darkModeToggle.checked = true;
+            } else {
+                body.classList.remove('dark-mode');
+                darkModeToggle.checked = false;
+            }
+        };
+
+        // Check localStorage for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } // Optional else block for system preference removed for brevity
+
+        // Event listener for the toggle switch
+        darkModeToggle.addEventListener('change', () => {
+            const theme = darkModeToggle.checked ? 'dark' : 'light';
+            body.classList.toggle('dark-mode', darkModeToggle.checked);
+            localStorage.setItem('theme', theme); // Save preference
+        });
+    </script>
+
+</body>
 </html>
-

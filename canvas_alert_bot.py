@@ -26,6 +26,9 @@ async def send_alert_message(user_id: int, message: str):
     except Exception as e:
         print(f"Failed to send message to user {user_id}: {e}")
 
+def runBot():
+    bot.run(TOKEN)
+
 if __name__ == "__main__":
     if not TOKEN:
         print("Error: DISCORD_BOT_TOKEN environment variable not set.")
