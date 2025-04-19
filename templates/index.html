@@ -5,13 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CanvasAlert</title>
     <style>
-        /* === Google Font Imports (Uncomment the one you want to use) === */
-        /* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
-        /* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap'); */
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap'); /* Currently Active Google Font */
-        /* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); */
-        /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); */
-        /* === End Font Imports === */
+        /* Google Font Imports */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
         :root {
             /* Light Mode Variables */
@@ -24,9 +19,9 @@
             --input-text: #333;
             --label-color: #333;
             --secondary-text: #555;
-            --button-bg: #007bff; /* Default Blue */
-            --button-text: white; /* Default White Text */
-            --button-hover-bg: #0056b3; /* Default Darker Blue Hover */
+            --button-bg: #007bff;
+            --button-text: white;
+            --button-hover-bg: #0056b3;
             --hr-color: #eee;
             --toggle-off-bg: #dc3545;
             --toggle-on-bg: #28a745;
@@ -44,18 +39,14 @@
             --input-text: #e0e0e0;
             --label-color: #bbb;
             --secondary-text: #aaa;
-            /* Button variables remain the same as :root for the blue button */
-            /* --button-bg: #3a3a3a; */ /* No longer overriding button bg */
-            /* --button-text: #e0e0e0; */ /* No longer overriding button text */
-            /* --button-hover-bg: #555; */ /* No longer overriding button hover */
             --hr-color: #444;
-            --toggle-off-bg: #a33333; /* Darker red */
-            --toggle-on-bg: #3a8a4a; /* Darker green */
+            --toggle-off-bg: #a33333;
+            --toggle-on-bg: #3a8a4a; 
             --toggle-knob: #ccc;
         }
 
         body {
-            font-family: Lato, sans-serif; /* Currently Active */
+            font-family: Lato, sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -68,7 +59,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* === Styles for Heading with Logo === */
+        /* Styles for Heading */
         .heading-container {
             display: flex;
             align-items: center;
@@ -87,9 +78,9 @@
             color: var(--text-color);
             font-size: 2em;
         }
-        /* === End Heading Styles === */
+        /* End Heading Styles */
 
-        /* === Dark Mode Toggle Styles === */
+        /* Dark Mode Toggle Styles */
         .dark-mode-switch {
             position: absolute;
             top: 20px;
@@ -113,7 +104,7 @@
         }
         .dark-mode-slider.round { border-radius: 26px; }
         .dark-mode-slider.round:before { border-radius: 50%; }
-        /* === End Dark Mode Toggle Styles === */
+        /* End Dark Mode Toggle Styles */
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; color: var(--label-color); font-weight: bold; }
@@ -141,8 +132,8 @@
 
          /* Default button styles */
          .submit-container button {
-            background-color: var(--button-bg); /* Uses #007bff from :root */
-            color: var(--button-text); /* Uses white from :root */
+            background-color: var(--button-bg);
+            color: var(--button-text);
             border: none;
             padding: 12px 25px;
             border-radius: 5px;
@@ -151,23 +142,12 @@
             transition: background-color 0.3s ease;
          }
          .submit-container button:hover {
-            background-color: var(--button-hover-bg); /* Uses #0056b3 from :root */
+            background-color: var(--button-hover-bg); 
          }
 
-         /* === MODIFIED: Dark mode button styles === */
-         /* We remove specific background/color overrides for the button in dark mode */
-         /* It will now inherit the default blue style defined above */
          body.dark-mode .submit-container button {
-             /* background-color: var(--button-bg); */ /* REMOVED */
-             /* color: var(--button-text); */ /* REMOVED */
-             border: none; /* Keep border override if needed, or remove */
-             /* Ensure other properties like padding, font-size etc. are consistent or inherited */
+             border: none;
          }
-         body.dark-mode .submit-container button:hover {
-             /* background-color: var(--button-hover-bg); */ /* REMOVED */
-             /* Allow hover to inherit default dark blue */
-         }
-         /* === End MODIFIED dark mode button styles === */
 
     </style>
 </head>
@@ -221,7 +201,6 @@
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const body = document.body;
 
-        // Function to apply the theme
         const applyTheme = (theme) => {
             if (theme === 'dark') {
                 body.classList.add('dark-mode');
@@ -232,17 +211,15 @@
             }
         };
 
-        // Check localStorage for saved theme preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             applyTheme(savedTheme);
-        } // Optional else block for system preference removed for brevity
+        } 
 
-        // Event listener for the toggle switch
         darkModeToggle.addEventListener('change', () => {
             const theme = darkModeToggle.checked ? 'dark' : 'light';
             body.classList.toggle('dark-mode', darkModeToggle.checked);
-            localStorage.setItem('theme', theme); // Save preference
+            localStorage.setItem('theme', theme);
         });
     </script>
 

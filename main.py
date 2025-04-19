@@ -39,7 +39,7 @@ async def main():
                         await cab.send_alert_message(row[0], f"Assintment due within {preferred_time}: {assignment[0]}")
                         print(assignment)
                     else:
-                        print("Nothing due within time")
+                        print("Nothing due within preferred time")
             
         if (row[5] == 1):
             for row in table:
