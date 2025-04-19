@@ -22,9 +22,9 @@ def get_assignments(canvas_url, canvas_token,):
 
             
             if is_valid_assignment(assignment, user):
-                print(assignment)
-                assignments.append(assignment.name)
-            
+                #print(assignment.name)
+                assignments.append([assignment.name, assignment.due_at])
+    #print(assignments)
     return assignments
 
 def is_valid_assignment(assignment, user):
