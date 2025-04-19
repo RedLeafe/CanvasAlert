@@ -25,8 +25,12 @@ DISCORD_OAUTH_TOKEN_URL = "https://discord.com/api/oauth2/token"
 SCOPE = "identify email"
 
 
+
 # Define a route for the homepage ("/")
-db.create_users_table()
+HAS_DB = os.getenv("HAS_DB", "False").lower() == "true"
+
+if HAS_DB:
+   db.create_users_table()
 
 @app.route('/')
 def hello_world():
@@ -110,7 +114,7 @@ def discord_oauth():
 
 @app.route('/api', methods=['POST'])
 def receive_form():
-   discord_id = request.form.get('discord_id')
+   discord_id = session.get("user").id
    canvas_id = request.form.get('canvas_id')
    assignments = request.form.get('assignments_toggle')
    assignments_time = request.form.get('assignment_time')
