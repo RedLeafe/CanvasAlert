@@ -6,6 +6,7 @@ import os
 import json
 import requests
 import db as db
+import canvas_alert_bot as bot
 
 app = Flask(__name__)
 
@@ -128,3 +129,4 @@ def receive_form():
 
 if __name__ == '__main__':
    app.run(debug=True)
+   bot.runDiscordBot()
